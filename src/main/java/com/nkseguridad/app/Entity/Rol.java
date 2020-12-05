@@ -2,19 +2,18 @@ package com.nkseguridad.app.Entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import javax.persistence.GenerationType;
 
 @Entity
 @Table(name="rol", schema = "seguridad")
@@ -27,16 +26,22 @@ public class Rol implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String codigo;
+	
 	private String nombre;
+	
 	private Byte caracteristicas;
+	
 	private Boolean desistema;
+	
 	private String estado;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	//@JsonBackReference
-	@JoinColumn(name = "rolid", referencedColumnName = "id")
-	private List<Usuario> Lstusuarios= new ArrayList<>();
+	@ManyToMany
+	@JoinTable(name = "rolesxusuarios",
+		joinColumns = @JoinColumn(name= "rolid",referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name="login", referencedColumnName = "login"))
+	private Set<Usuario> Lstusuarios= new HashSet<Usuario>();
 	
 	public Rol() {
 		super();
@@ -79,13 +84,14 @@ public class Rol implements Serializable {
 		this.estado = estado;
 	}
 
-	public List<Usuario> getLstaUsuarios() {
+	public Set<Usuario> getLstusuarios() {
 		return Lstusuarios;
 	}
 
-	public void setLstaUsuarios(List<Usuario> Lstusuarios) {
-		this.Lstusuarios = Lstusuarios;
+	public void setLstusuarios(Set<Usuario> lstusuarios) {
+		Lstusuarios = lstusuarios;
 	}
+
 	
 
 }

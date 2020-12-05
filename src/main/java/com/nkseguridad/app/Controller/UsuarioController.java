@@ -37,9 +37,9 @@ public class UsuarioController {
 		}
 	}
 
-	@GetMapping("/usuario/{login}")
-	public ResponseEntity<?> ObtenerUsuarioLogin(@PathVariable(name = "login") String Login) {
-		Usuario User = Usuarioservice.findByLogin(Login);
+	@GetMapping("/usuario/{username}")
+	public ResponseEntity<?> ObtenerUsuarioLogin(@PathVariable(name = "username") String Username) {
+		Usuario User = Usuarioservice.findByLogin(Username);
 		if (User != null) {
 			return new ResponseEntity<>(User, HttpStatus.OK);
 		} else {
@@ -47,19 +47,6 @@ public class UsuarioController {
 		}
 	}
 
-	@PostMapping("/usuario/autenticar")
-	public ResponseEntity<?> AutenticarUsuarioLogin(@RequestBody Usuario Usuario) {
-		if (Usuario != null) {
-			Usuario User = Usuarioservice.findByUser(Usuario);
-			if (User != null) {
-				return new ResponseEntity<>(User, HttpStatus.OK);
-			} else {
-				return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-			}
-		}
-		else {
-			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
-		}
-	}
+
 
 }

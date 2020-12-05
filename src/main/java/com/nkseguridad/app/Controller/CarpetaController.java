@@ -29,7 +29,7 @@ public class CarpetaController {
 				return new ResponseEntity<>(LstCarpetas, HttpStatus.OK);
 			}
 			else
-				return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}
 		else
 			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
